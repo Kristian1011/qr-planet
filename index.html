@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Buat Planet & QR Code</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+  <style>
+    body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+    input, select { display: block; margin-bottom: 10px; width: 100%; padding: 8px; }
+    #qrcode { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Buat Planet & Dapatkan QR Code</h1>
+  <form id="planetForm">
+    <label>Nama Planet:</label>
+    <input type="text" id="nama" required>
+
+    <label>Ukuran:</label>
+    <select id="ukuran">
+      <option value="kecil">Kecil</option>
+      <option value="sedang">Sedang</option>
+      <option value="besar">Besar</option>
+    </select>
+
+    <label>Warna:</label>
+    <input type="color" id="warna" value="#00aaff">
+
+    <button type="submit">Buat QR Code</button>
+  </form>
+
+  <div id="qrcode"></div>
+
+  <script>
+    const form = document.getElementById("planetForm");
+    const qrDiv = document.getElementById("qrcode");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const nama = document.getElementById("nama").value;
+      const ukuran = document.getElementById("ukuran").value;
+      const warna = document.getElementById("warna").value.replace("#", "");
+
+      // Misalnya QR mengarah ke halaman video planet
+      const videoURL = `https://example.com/planet_video.html?nama=${nama}&ukuran=${ukuran}&warna=${warna}`;
+      
+      qrDiv.innerHTML = ""; // reset
+      QRCode.toCanvas(videoURL, { width: 220 }, function (err, canvas) {
+        if (err) console.error(err);
+        qrDiv.appendChild(canvas);
+      });
+    });
+  </script>
+</body>
+</html>
